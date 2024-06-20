@@ -31,6 +31,8 @@ app.post("/", authController.postLogin);
 app.get("/signup", authController.getSignup);
 app.post("/signup", authController.postSignup);
 app.get("/profile", userController.getUser);
+app.post("/profile", userController.postUser);
+app.get("/profileInfo", userController.getProfileInfo);
 
 app.listen(3300, function () {
     console.log("Server running at port 3300....");

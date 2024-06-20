@@ -19,7 +19,11 @@ exports.postLogin = (req, res, next) => {
                 console.log(err); 
                 return res.render("login", { errorMessage: "Login failed. Please try again." });
             }
-            return res.redirect("/profile");
+            if(!user.profileComplete){
+                return res.redirect("/profile");
+            } else {
+                return res.redirect("/profileInfo");
+            }
         });
     })(req, res, next);
 };

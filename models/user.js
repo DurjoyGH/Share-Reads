@@ -4,7 +4,15 @@ const passport = require("passport");
 
 const userInfoSchema = new mongoose.Schema({
     name: String,
-    email: String
+    gender: String,
+    email: String,
+    division: String,
+    address: String,
+    phone: String,
+    profileComplete: {
+        type: Boolean,
+        default: false
+    }
 });
 
 userInfoSchema.plugin(passportLocalMongoose);

@@ -18,3 +18,47 @@ exports.getUser = (req, res) => {
         res.status(500).send("Internal Server Error");
     });
 };
+
+exports.postUser = (req, res) => {
+
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    const { address, phone, division, gender } = req.body;
+
+    User.findById(req.user._id).then((user) => {
+        if (user) {
+            user.address = address;
+            user.phone = phone;
+            user.division = division;
+            user.gender = gender;
+            user.profileComplete = true;
+            return user.save();
+        }
+    }).then(() => {
+        res.redirect("/profileInfo");
+    }).catch((err) => {
+        console.log(err);
+        res.redirect("/profile");
+    });
+};
+
+exports.getProfileInfo = (req, res) => {
+
+    User.findById(req.user._id).then((user) => {
+        if (user) {
+            res.render("profileInfo", {
+                userName: user.name,
+                userGender: user.gender,
+                userEmail: user.username,
+                userDivision: user.division,
+                userAddress: user.address,
+                userPhone: user.phone,
+            });
+        }
+    }).catch((err) => {
+        console.log(err);
+        res.redirect("/");
+    });
+};
